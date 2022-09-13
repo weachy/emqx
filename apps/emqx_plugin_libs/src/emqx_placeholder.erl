@@ -39,7 +39,7 @@
     sql_data/1
 ]).
 
--define(EX_PLACE_HOLDER, "(\\$\\{[a-zA-Z0-9\\._]+\\}|\"\\$\\{[a-zA-Z0-9\\._]+\\}\")").
+-define(EX_PLACE_HOLDER, "(\\$\\{[a-zA-Z0-9\\._]+\\})").
 %% Space and CRLF
 -define(EX_WITHE_CHARS, "\\s").
 
@@ -235,9 +235,7 @@ get_phld_var(Phld, Data) ->
     emqx_rule_maps:nested_get(Phld, Data).
 
 preproc_var_re(#{placeholders := PHs}) ->
-    Res = [ph_to_re(PH) || PH <- PHs],
-    QuoteRes = ["\"" ++ Re ++ "\"" || Re <- Res],
-    "(" ++ string:join(Res ++ QuoteRes, "|") ++ ")";
+    "(" ++ string:join([ph_to_re(PH) || PH <- PHs], "|") ++ ")";
 preproc_var_re(#{}) ->
     ?EX_PLACE_HOLDER.
 
@@ -294,9 +292,7 @@ parse_nested(Attr) ->
     end.
 
 unwrap(<<"${", Val/binary>>) ->
-    binary:part(Val, {0, byte_size(Val) - 1});
-unwrap(<<"\"${", Val/binary>>) ->
-    binary:part(Val, {0, byte_size(Val) - 2}).
+    binary:part(Val, {0, byte_size(Val) - 1}).
 
 quote_sql(Str) ->
     quote(Str, <<"\\\\'">>).
