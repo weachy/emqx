@@ -54,7 +54,7 @@ jobs:
       TF_VAR_package_file: ${{ needs.prepare.outputs.PACKAGE_FILE }}
       TF_VAR_grafana_api_key: ${{ secrets.TF_EMQX_PERF_TEST_GRAFANA_API_KEY }}
       TF_AWS_REGION: eu-north-1
-      TF_VAR_test_duration: 1800
+      TF_VAR_test_duration: 180
 
     steps:
     - name: Configure AWS Credentials
