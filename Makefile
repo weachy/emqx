@@ -3,6 +3,7 @@ REBAR = $(CURDIR)/rebar3
 BUILD = $(CURDIR)/build
 SCRIPTS = $(CURDIR)/scripts
 export EMQX_RELUP ?= true
+export EMQX_EXTRA_PLUGINS = emqx_plugin_kafka
 export EMQX_DEFAULT_BUILDER = ghcr.io/emqx/emqx-builder/4.4-20:24.3.4.2-1-alpine3.15.1
 export EMQX_DEFAULT_RUNNER = alpine:3.15.1
 export DOCKERFILE := deploy/docker/Dockerfile
